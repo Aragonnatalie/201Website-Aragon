@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BYU Cute Trivia</title>
+
+<!-- Bootstrap + Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom right, #002E5D, #4da3ff);
+    margin: 0;
+    text-align: center;
+}
+
+/* NAVBAR */
+#mainNav {
+    background-color: white;
+    position: relative;
+}
+
+/* your existing styles */
+.container {
+    max-width: 700px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+h1 { color: #002E5D; }
+
+.question {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 15px;
+    background: #f0f7ff;
+}
+
+button {
+    display: block;
+    width: 80%;
+    margin: 8px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #e6f0ff;
+    color: #002E5D;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #cce0ff;
+    transform: scale(1.03);
+}
+
+.selected {
+    background: #4da3ff;
+    color: white;
+}
+
+#score {
+    font-size: 22px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#endScreen {
+    display: none;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR (CENTERED BYU EXPERIENCE) -->
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5 position-relative">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <!-- LEFT -->
+            <ul class="navbar-nav me-auto py-4 py-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">About Me</a>
+                </li>
+            </ul>
+
+            <!-- CENTER -->
+            <ul class="navbar-nav position-absolute top-50 start-50 translate-middle">
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" href="byu-experience.html">BYU Experience</a>
+                </li>
+            </ul>
+
+            <!-- RIGHT -->
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" href="ai.html">Trivia Game</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<canvas id="confettiCanvas"></canvas>
+
+<div class="container" id="quizContainer">
+    <h1>🐾 BYU Trivia 💙</h1>
+    <div id="quiz"></div>
+    <div id="score">Score: 0</div>
+</div>
+
+<div class="container" id="endScreen">
+    <h1 id="finalMessage"></h1>
+    <p id="finalScore"></p>
+    <button onclick="restartQuiz()">🔁 Retake Quiz</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const questions = [
+    { question: "What does BYU stand for?", options: ["Brigham Young University", "Bright Youth United", "Best Year University"], answer: 0 },
+    { question: "Where is BYU located?", options: ["Salt Lake City", "Provo", "Ogden"], answer: 1 },
+    { question: "What are BYU's colors?", options: ["Red & White", "Blue & White", "Green & Gold"], answer: 1 },
+    { question: "What is BYU’s mascot?", options: ["Cougar", "Falcon", "Wildcat"], answer: 0 },
+    { question: "Which conference is BYU in?", options: ["Big 12", "SEC", "Pac-12"], answer: 0 },
+    { question: "What is BYU’s football stadium?", options: ["Rice-Eccles", "LaVell Edwards Stadium", "Cougar Field"], answer: 1 },
+    { question: "What year was BYU founded?", options: ["1875", "1890", "1905"], answer: 0 }
+];
+
+let userAnswers = new Array(questions.length).fill(null);
+let score = 0;
+
+/* QUIZ LOGIC (unchanged) */
+function renderQuiz() {
+    const quizDiv = document.getElementById("quiz");
+    quizDiv.innerHTML = "";
+
+    questions.forEach((q, qIndex) => {
+        const div = document.createElement("div");
+        div.className = "question";
+
+        const title = document.createElement("h3");
+        title.textContent = "🐾 " + q.question;
+        div.appendChild(title);
+
+        q.options.forEach((option, oIndex) => {
+            const btn = document.createElement("button");
+            btn.textContent = String.fromCharCode(65 + oIndex) + ". " + option;
+
+            if (userAnswers[qIndex] === oIndex) {
+                btn.classList.add("selected");
+            }
+
+            btn.onclick = () => selectAnswer(qIndex, oIndex);
+            div.appendChild(btn);
+        });
+
+        quizDiv.appendChild(div);
+    });
+}
+
+function selectAnswer(questionIndex, optionIndex) {
+    const previous = userAnswers[questionIndex];
+
+    if (previous !== null && previous === questions[questionIndex].answer) {
+        score--;
+    }
+
+    userAnswers[questionIndex] = optionIndex;
+
+    if (optionIndex === questions[questionIndex].answer) {
+        score++;
+        launchConfetti();
+    }
+
+    document.getElementById("score").textContent = "Score: " + score;
+
+    checkEnd();
+    renderQuiz();
+}
+
+function checkEnd() {
+    if (userAnswers.every(a => a !== null)) {
+        document.getElementById("quizContainer").style.display = "none";
+        document.getElementById("endScreen").style.display = "block";
+
+        document.getElementById("finalScore").textContent = "Your Score: " + score + "/7";
+
+        if (score === questions.length) {
+            document.getElementById("finalMessage").textContent = "🎉 You're a True Cougar! 🐾";
+            launchConfetti(150);
+        } else {
+            document.getElementById("finalMessage").textContent = "Nice try! 🐾";
+        }
+    }
+}
+
+function restartQuiz() {
+    userAnswers = new Array(questions.length).fill(null);
+    score = 0;
+    document.getElementById("score").textContent = "Score: 0";
+
+    document.getElementById("quizContainer").style.display = "block";
+    document.getElementById("endScreen").style.display = "none";
+
+    renderQuiz();
+}
+
+/* CONFETTI */
+const canvas = document.getElementById("confettiCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+function drawPaw(x, y, size, color) {
+    ctx.fillStyle = color;
+
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+
+    const offsets = [
+        [-size, -size],
+        [size, -size],
+        [-size * 1.5, 0],
+        [size * 1.5, 0]
+    ];
+
+    offsets.forEach(o => {
+        ctx.beginPath();
+        ctx.arc(x + o[0], y + o[1], size/2, 0, Math.PI * 2);
+        ctx.fill();
+    });
+}
+
+function launchConfetti(amount = 30) {
+    for (let i = 0; i < amount; i++) {
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height / 2,
+            size: Math.random() * 4 + 3,
+            speed: Math.random() * 3 + 2,
+            color: ["#4da3ff", "#002E5D", "#ffffff"][Math.floor(Math.random()*3)]
+        });
+    }
+}
+
+function updateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach((c, i) => {
+        c.y += c.speed;
+        drawPaw(c.x, c.y, c.size, c.color);
+
+        if (c.y > canvas.height) confetti.splice(i, 1);
+    });
+
+    requestAnimationFrame(updateConfetti);
+}
+
+updateConfetti();
+renderQuiz();
+</script>
+
+</body>
+</html>

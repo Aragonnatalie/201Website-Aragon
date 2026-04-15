@@ -1,0 +1,184 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f7f9fc;
+    color: #1f2d3d;
+}
+
+/* HERO */
+.hero {
+    padding: 120px 20px 100px;
+    background: linear-gradient(to right, #e6f2ff, #f7fbff);
+    position: relative;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 3.2rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    text-align: center;
+}
+
+.hero p {
+    margin-top: 15px;
+    font-weight: 300;
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* NAV (TOP RIGHT + CLEAN STYLE) */
+.nav {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 10px 18px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.nav a {
+    text-decoration: none;
+    color: #1f2d3d;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.nav a:hover {
+    color: #4FA3FF;
+}
+
+/* CONTAINER */
+.container {
+    width: 75%;
+    margin: auto;
+    padding: 40px 0;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 35px;
+    margin-bottom: 40px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* GRID */
+.bucket-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* BUCKET ITEMS */
+.bucket-item {
+    transition: transform 0.25s ease;
+}
+
+.bucket-item:hover {
+    transform: translateY(-6px);
+}
+
+/* IMAGE FIX (grid images) */
+.bucket-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* CAMPUS LIFE IMAGE FIX (THIS fixes your overflow issue) */
+.card img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.card .image {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+    margin-top: 15px;
+}
+/* FORCE ALL BUCKET IMAGES TO BE UNIFORM */
+.bucket-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* FIX TITLE ALIGNMENT (this is what you were noticing) */
+.bucket-item h3 {
+    margin: 8px 0 5px;
+    min-height: 48px;   /* forces all headers to take same space */
+    display: flex;
+    align-items: center; /* vertically centers text */
+    justify-content: flex-start;
+}
+
+/* OPTIONAL CAMPUS WRAPPER */
+.campus-image-wrapper {
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+/* TEXT */
+.bucket-item h3 {
+    margin: 8px 0 5px;
+    min-height: 40px;
+}
+
+.bucket-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+/* CENTER TEXT */
+.center-text {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.small-text {
+    font-size: 0.9em;
+    opacity: 0.6;
+    margin-top: 10px;
+}
+
+/* BUTTON */
+.top-btn {
+    display: inline-block;
+    margin: 40px;
+    padding: 12px 24px;
+    background: #002E5D;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+}
+
+.top-btn:hover {
+    background: #4FA3FF;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+}

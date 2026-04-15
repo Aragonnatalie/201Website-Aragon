@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BYU Experience</title>
+
+<link rel="stylesheet" href="/css/mystyles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<a id="top"></a>
+
+<header class="hero">
+    <h1>My BYU Freshman Experience</h1>
+    <p>Making the most of your first year at BYU
+    <br>
+    Natalie Aragon - IS201
+    </p>
+</header>
+
+<nav class="nav">
+    <a href="index.html">About</a>
+    <a href="byu-experience.html">Experience</a>
+    <a href="ai.html">Trivia</a>
+</nav>
+
+<div class="container">
+
+    <!-- CAMPUS -->
+    <section class="card campus-hero">
+        <h2>Campus Life</h2>
+
+        <div class="campus-image-wrapper">
+            <img src="/assets/img/Campus.png" class="image">
+        </div>
+
+        <p>
+            Slowing down and appreciating campus is one of the most meaningful parts of freshman year.
+            The environment at BYU creates space for both growth and reflection.
+        </p>
+    </section>
+
+    <!-- BUCKET LIST -->
+    <section class="card">
+        <h2>Freshman Experience Guide</h2>
+
+        <div class="bucket-grid">
+
+            <div class="bucket-item">
+                <img src="assets/img/Stadium.webp">
+                <h3>Attend Sports Events</h3>
+                <p>I went to and enjoyed football, basketball, lacrosse, rugby, and soccer games.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/beauty fix.png">
+                <h3>Capture Campus Beauty</h3>
+                <p>My favorites are the bell tower, duck pond, and mountain views.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/comedy.png">
+                <h3>Comedy Show</h3>
+                <p>Experience BYU improv and live performances.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/Museum.jpg">
+                <h3>Visit Museums</h3>
+                <p>Variety of options including the Paleontology Museum and Museum of Art</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/Sunset.jpg">
+                <h3>Watch Sunsets</h3>
+                <p>Enjoy multiple sunsets across campus.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/Skiing.jpg">
+                <h3>Explore Provo</h3>
+                <p>Go out on the town and find new activities with friends.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/Devotional.jpg">
+                <h3>Devotionals & Forums</h3>
+                <p>Attend spiritual events and campus devotionals.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/MTC.jpg">
+                <h3>Service</h3>
+                <p>Participate in Y-Serve and meaningful service opportunities.</p>
+            </div>
+
+            <div class="bucket-item">
+                <img src="assets/img/Walk.jpg">
+                <h3>Iconic Walk</h3>
+                <p>Walk through the botanical gardens and scenic paths.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="card">
+        <h2>BYU Spirit</h2>
+
+        <iframe width="100%" height="400"
+            src="https://www.youtube.com/embed/FOeK47c-Wh4"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+
+        <p class="center-text">
+            Getting involved early helps BYU feel like home faster.
+        </p>
+    </section>
+
+    <!-- CHART -->
+    <section class="card">
+        <h2>Student Insights</h2>
+
+        <p>
+            Students who are more involved in campus life tend to feel more connected
+            and perform better academically during their first year.
+        </p>
+
+        <canvas id="myChart" style="max-width:100%; height:400px;"></canvas>
+    </section>
+
+</div>
+
+<footer class="footer">
+    <a href="#top" class="top-btn">Back to Top</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Low Involvement', 'Moderate Involvement', 'High Involvement'],
+        datasets: [{
+            label: 'Average Student Success (%)',
+            data: [65, 78, 92],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
